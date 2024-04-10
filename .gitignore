@@ -1,4 +1,6 @@
 CMakeFiles
+Debug
+Release
 *.cmake
 CmakeCache.txt
 .vs
