@@ -13,17 +13,32 @@ inline double calcLuma(rgba_t _pixel) {
 	return ( (_pixel.a/255.0) * ((_pixel.r * 0.2126 + _pixel.g * 0.7152 + _pixel.b * 0.0722)/255.0) );
 }
 
+inline double calcRGBA(rgba_t _pixel) {
+	return (_pixel.r + _pixel.g + _pixel.b) / (255.0 * 3) * _pixel.a / 255.0;
+}
+
+inline double calcRed(rgba_t _pixel) {
+	return _pixel.r / 255.0;
+}
+
+inline double calcGreen(rgba_t _pixel) {
+	return _pixel.r / 255.0;
+}
+
+inline double calcBlue(rgba_t _pixel) {
+	return _pixel.r / 255.0;
+}
+
 int32_t main(int32_t argc, char** argv) {
 	if (argc < 2) {
 		printf("Wrong calling method!\nShould be to_ascii_inator <filepath> /flags/");
 		return EXIT_FAILURE;
 	}
 
-
-
 	std::string output_path = "output.txt";
 	std::string filepath = argv[1];
 	uint32_t out_x, out_y;
+	inline double (*calcVal)(rgba_t) = calcLuma;
 	int32_t x, y;
 	int32_t channels;
 	
@@ -33,17 +48,16 @@ int32_t main(int32_t argc, char** argv) {
 		return EXIT_FAILURE;
 	}
 	out_x = x, out_y = y;
-	out_x += 50; out_y += 50;
-
-	std::unordered_map<std::string, uint8_t> map;
-	map.insert({ "-o", 0 });
-	map.insert({ "-s", 1 });
-	map.insert({ "-r", 2 });
+	
+	std::unordered_map<std::string, uint8_t> argMap;
+	argMap.insert({ "-o", 0 }); argMap.insert({ "-s", 1 }); argMap.insert({ "-r", 2 }); argMap.insert({ "-f", 3 });
+	std::unordered_map<std::string, uint8_t> funcMap;
+	funcMap.insert({ "luma", 0 }); funcMap.insert({ "rgba", 1 }); funcMap.insert({ "r",2 }); funcMap.insert({ "g",3 }); funcMap.insert({ "b",4 });
 	for (uint32_t i = 1; i < argc; i++) {
-		if (map.find(argv[i]) == map.end())
+		if (argMap.find( argv[i]) == argMap.end())
 			continue;
 
-		switch (map[argv[i]]) {
+		switch (argMap[argv[i]]) {
 		case 0:
 			output_path = argv[i + 1];
 			i++;
@@ -57,6 +71,29 @@ int32_t main(int32_t argc, char** argv) {
 			out_x /= std::atoi(argv[i + 1]);
 			out_y /= std::atoi(argv[i + 1]);
 			i++;
+			break;
+		case 3:
+			if (funcMap.find(argv[i+1]) == funcMap.end())
+				continue;
+
+			switch (funcMap[argv[i + 1]]) {
+			case 0:
+				calcVal = calcLuma;
+				break;
+			case 1:
+				calcVal = calcRGBA;
+				break;
+			case 2:
+				calcVal = calcRed;
+				break;
+			case 3:
+				calcVal = calcGreen;
+				break;
+			case 4:
+				calcVal = calcBlue;
+				break;
+			}
+
 			break;
 		}
 	}
@@ -101,20 +138,20 @@ int32_t main(int32_t argc, char** argv) {
 			if (end_x <= ceil(start_x)) {
 				double w2 = end_x - start_x;
 				for (const auto& w : wages) {
-					luma += calcLuma(data[w.first * x + k2]) * w.second * w2;
+					luma += calcVal(data[w.first * x + k2]) * w.second * w2;
 				}
 			} else {
 				while (1) {
 					if (k2 < start_x) {
 						double w2 = ceil(start_x) - start_x;
 						for (const auto& w : wages) {
-							luma += calcLuma(data[w.first * x + k2]) * w.second * w2;
+							luma += calcVal(data[w.first * x + k2]) * w.second * w2;
 						}
 					}
 					else {
 						double w2 = k2 + 1 < end_x ? 1 : end_x - k2;
 						for (const auto& w : wages) {
-							luma += calcLuma(data[w.first * x + k2]) * w.second * w2;
+							luma += calcVal(data[w.first * x + k2]) * w.second * w2;
 						}
 					}
 					k2++;
