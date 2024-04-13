@@ -6,7 +6,7 @@ To learn more check stb library supported formats.
 
 ## usage
 Program should be called using following convention:  
-./to_ascii_inator.exe <input filepath> /optional flags/
+./to_ascii_inator.exe //input filepath// /optional flags/
 
 Flags:  
 "-o" - specifying output filename (1 parameter)  
