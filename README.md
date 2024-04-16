@@ -1,10 +1,10 @@
 # to_ascii_inator - a basic image to text converter
 
-## input filetypes
+## Input filetypes
 Program can decode many different image formats such as .jpg, .png and .gif.  
 To learn more check stb library supported formats.
 
-## usage
+## Usage
 Program should be called using following convention:  
 ./to_ascii_inator.exe //input filepath// /optional flags/
 
@@ -16,5 +16,5 @@ Flags:
 currently supported function types:  
 "luma" - calculation luminance basing on rec. 709 standard, "rgba" - calculating average value of every colour, "r" - taking value of red, "g" - taking value of green, "b" - taking value of blue
 
-##Dependencies
+## Dependencies
 Program uses "stb_image.h" header from stb library that can be found at https://github.com/nothings/stb
