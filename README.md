@@ -15,3 +15,8 @@ Flags:
 "-f" specifying function type used to calculate ascii value (1 parameter)  
 currently supported function types:  
 "luma" - calculation luminance basing on rec. 709 standard, "rgba" - calculating average value of every colour, "r" - taking value of red, "g" - taking value of green, "b" - taking value of blue
+
+
+##Dependencies
+
+Program uses "stb_image.h" header from stb library that can be found at https://github.com/nothings/stb
