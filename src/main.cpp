@@ -38,7 +38,7 @@ int32_t main(int32_t argc, char** argv) {
 	std::string output_path = "output.txt";
 	std::string filepath = argv[1];
 	uint32_t out_x, out_y;
-	inline double (*calcVal)(rgba_t) = calcLuma;
+	double (*calcVal)(rgba_t) = calcLuma;
 	int32_t x, y;
 	int32_t channels;
 	
