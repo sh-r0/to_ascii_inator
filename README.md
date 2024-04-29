@@ -6,7 +6,8 @@ To learn more check stb library supported formats.
 
 ## Usage
 Program should be called using following convention:  
-./to_ascii_inator.exe //input filepath// /optional flags/
+./to_ascii_inator.exe //input filepath// /optional flags/  
+You may want to use a monospaced font for the best effect when viewing
 
 Flags:  
 "-o" - specifying output filename (1 parameter)  
@@ -18,3 +19,6 @@ currently supported function types:
 
 ## Dependencies
 Program uses "stb_image.h" header from stb library that can be found at https://github.com/nothings/stb
+
+![The wanderer painting](/examples/the_wanderer.png "the wanderer painting in ascii")  
+![Mona lisa painting](/examples/mona_lisa.png "mona lisa painting in ascii")
